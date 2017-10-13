@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//ai/__init__.py=UTF-8
+encoding//ai/agents/DDQNAgent.py=UTF-8
+encoding//ai/agents/PolicyGradientAgent.py=UTF-8
+encoding//ai/agents/PolicyGradientAgent2.py=UTF-8
+encoding//ai/agents/SarsaAgent.py=UTF-8
+encoding//ai/agents/SarsaLambdaAgent.py=UTF-8
+encoding//ai/environments/arm_env.py=UTF-8
+encoding//ai/environments/gridworld.py=UTF-8
+encoding//snake/__init__.py=utf-8
