@@ -53,7 +53,11 @@ def main():
 #     env = gym.make('CartPole-v0')
 #     env = gym.make('MountainCar-v0')
 #     env = gym.make('Pendulum-v0')
-    env = gym.make("MountainCarContinuous-v0")
+#     env = gym.make("MountainCarContinuous-v0")
+    env = ArmEnv(mode='hard')
+#     print(env.state_dim)
+#     print(env.action_dim)
+#     print(env.action_bound)
 #     env.seed(1)
     
     #discrete action space required
@@ -107,12 +111,23 @@ def main():
 #     agent.set_actor_model(actor_model)
 #     agent.set_critic_model(critic_model)
  
+#     agent = DDPGAgent(env,
+#             n_actions=1, # continuous action
+#             n_features=env.observation_space.shape[0],
+#             featurize=True, 
+#             action_high=env.action_space.high[0],
+#             action_low=env.action_space.low[0],
+#             actor_learning_rate=0.001,
+#             critic_learning_rate=0.002,
+#             priority_alpha=1
+#             )
+    
     agent = DDPGAgent(env,
-            n_actions=1, # continuous action
-            n_features=env.observation_space.shape[0],
-            featurize=True, 
-            action_high=env.action_space.high[0],
-            action_low=env.action_space.low[0],
+            n_actions=env.action_dim,
+            n_features=env.state_dim,
+            featurize=False, 
+            action_high=1,
+            action_low=-1,
             actor_learning_rate=0.001,
             critic_learning_rate=0.002,
             priority_alpha=1
@@ -120,8 +135,8 @@ def main():
     
 #     tf.summary.FileWriter("./logs", agent.sess.graph)
     
-    rewards = agent.learn(100,visualize=False,verbose=1)
-    agent.test(10)
+    rewards = agent.learn(200,visualize=True,verbose=1)
+    agent.test(5)
 #     plt.plot(rewards)
 #     plt.show()
 

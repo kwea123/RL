@@ -5,6 +5,7 @@ import gym
 import sklearn.preprocessing
 import sklearn.pipeline
 from sklearn.kernel_approximation import RBFSampler
+from tensorflow.contrib.learn.python.learn import trainable
 
 class DDPGAgent:
     def __init__(self, env:gym.Env, n_actions, n_features, action_low, action_high, featurize=False, reward_decay=0.95,
@@ -71,7 +72,9 @@ class DDPGAgent:
     
     def _build_a(self, s, scope, trainable): # policy
         with tf.variable_scope(scope):
-            net = tf.layers.dense(s, 30, activation=tf.nn.relu, name='l1', trainable=trainable)
+            net = tf.layers.dense(s, 200, activation=tf.nn.relu, name='l1', trainable=trainable)
+            net = tf.layers.dense(net, 100, activation=tf.nn.relu, name='l2', trainable=trainable)
+            net = tf.layers.dense(net, 30, activation=tf.nn.relu, name='l3', trainable=trainable)
             a = tf.layers.dense(net, self.action_size, activation=tf.nn.tanh, name='a', trainable=trainable)
             self.actor_model_set = True
             return a * (self.action_high-self.action_low)/2 + (self.action_high+self.action_low)/2
@@ -83,6 +86,8 @@ class DDPGAgent:
             w1_a = tf.get_variable('w1_a', [self.action_size, n_l1], trainable=trainable)
             b1 = tf.get_variable('b1', [1, n_l1], trainable=trainable)
             net = tf.nn.relu(tf.matmul(s, w1_s) + tf.matmul(a, w1_a) + b1)
+            net = tf.layers.dense(net, 200, activation=tf.nn.relu, trainable=trainable)
+            net = tf.layers.dense(net, 10, activation=tf.nn.relu, trainable=trainable)
             self.critic_model_set = True
             return tf.layers.dense(net, 1, trainable=trainable)  # Q(s,a)
     
@@ -162,7 +167,7 @@ class DDPGAgent:
                 state = self.featurize_state(state)
             r = 0
             counter = 0
-            while True:
+            while counter<200:
                 counter += 1
                 if visualize:
                     self.env.render()
@@ -174,11 +179,12 @@ class DDPGAgent:
                     next_state = self.featurize_state(next_state)
                 self.remember(state, action, reward, next_state, done)
                 # learn when memory is full, every BATCH steps
-                if len(self.memory) == self.memory_size and (counter%self.batch_size==0 or done):
-                    self.variance *= 0.9995
+                if len(self.memory) == self.memory_size and (counter%self.batch_size==0 or done or counter==200):
+                    self.variance *= 0.99995
+#                     self.replay(self.batch_size)
                     [self.replay(self.batch_size) for _ in range(10)]
                 state = next_state
-                if done:
+                if done or counter==200:
                     if verbose > 0:
                         print("episode:", i_episode+1, "rewards:", r, "explore var: %.2f" % self.variance)
                     rewards += [r]
@@ -206,10 +212,10 @@ class DDPGAgent:
                 if self.featurize:
                     next_state = self.featurize_state(next_state)
                 state = next_state
-                if done:
-                    if verbose > 0:
-                        print("episode:", i_episode+1, "rewards:", r)
-                    rewards += [r]
-                    break
+#                 if done:
+#                     if verbose > 0:
+#                         print("episode:", i_episode+1, "rewards:", r)
+#                     rewards += [r]
+#                     break
         print("finished testing!")
         return rewards
