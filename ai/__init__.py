@@ -10,6 +10,7 @@ from ai.agents.PPOTest import *
 from ai.agents.SarsaLambdaAgent import *
 from ai.environments.gridworld import *
 from ai.environments.arm_env import *
+from ai.environments.arm_env_graph import *
 from keras import backend as K
 from keras.models import Model
 from keras.layers import Dense, Input, add, Lambda, concatenate
@@ -54,10 +55,8 @@ def main():
 #     env = gym.make('MountainCar-v0')
 #     env = gym.make('Pendulum-v0')
 #     env = gym.make("MountainCarContinuous-v0")
+    
     env = ArmEnv(mode='hard')
-#     print(env.state_dim)
-#     print(env.action_dim)
-#     print(env.action_bound)
 #     env.seed(1)
     
     #discrete action space required
@@ -130,15 +129,15 @@ def main():
             action_low=-1,
             actor_learning_rate=0.001,
             critic_learning_rate=0.002,
-            priority_alpha=1
+            priority_alpha=0
             )
     
 #     tf.summary.FileWriter("./logs", agent.sess.graph)
     
-    rewards = agent.learn(200,visualize=True,verbose=1)
-    agent.test(5)
-#     plt.plot(rewards)
-#     plt.show()
+    rewards = agent.learn(1000,visualize=False,verbose=1)
+    plt.plot(rewards)
+    plt.show()
+    agent.test(10)
 
 if __name__ == "__main__":
     main()

@@ -1,14 +1,12 @@
 from ai.structure.SumTree import *
 import numpy as np
 import tensorflow as tf
-import gym
 import sklearn.preprocessing
 import sklearn.pipeline
 from sklearn.kernel_approximation import RBFSampler
-from tensorflow.contrib.learn.python.learn import trainable
 
 class DDPGAgent:
-    def __init__(self, env:gym.Env, n_actions, n_features, action_low, action_high, featurize=False, reward_decay=0.95,
+    def __init__(self, env, n_actions, n_features, action_low, action_high, featurize=False, reward_decay=0.95,
                  actor_learning_rate=0.01, critic_learning_rate=0.01, learning_rate_decay=0.95,
                  memory_size=10000, priority_alpha=0.6, tau=0.9, variance=3):
         self.env = env
@@ -73,21 +71,19 @@ class DDPGAgent:
     def _build_a(self, s, scope, trainable): # policy
         with tf.variable_scope(scope):
             net = tf.layers.dense(s, 200, activation=tf.nn.relu, name='l1', trainable=trainable)
-            net = tf.layers.dense(net, 100, activation=tf.nn.relu, name='l2', trainable=trainable)
-            net = tf.layers.dense(net, 30, activation=tf.nn.relu, name='l3', trainable=trainable)
+            net = tf.layers.dense(net, 30, activation=tf.nn.relu, name='l2', trainable=trainable)
             a = tf.layers.dense(net, self.action_size, activation=tf.nn.tanh, name='a', trainable=trainable)
             self.actor_model_set = True
             return a * (self.action_high-self.action_low)/2 + (self.action_high+self.action_low)/2
     
     def _build_c(self, s, a, scope, trainable): # advantage value
         with tf.variable_scope(scope):
-            n_l1 = 30
+            n_l1 = 200
             w1_s = tf.get_variable('w1_s', [self.state_size, n_l1], trainable=trainable)
             w1_a = tf.get_variable('w1_a', [self.action_size, n_l1], trainable=trainable)
             b1 = tf.get_variable('b1', [1, n_l1], trainable=trainable)
             net = tf.nn.relu(tf.matmul(s, w1_s) + tf.matmul(a, w1_a) + b1)
-            net = tf.layers.dense(net, 200, activation=tf.nn.relu, trainable=trainable)
-            net = tf.layers.dense(net, 10, activation=tf.nn.relu, trainable=trainable)
+#             net = tf.layers.dense(net, 30, activation=tf.nn.relu, name='l2', trainable=trainable)
             self.critic_model_set = True
             return tf.layers.dense(net, 1, trainable=trainable)  # Q(s,a)
     
@@ -112,7 +108,7 @@ class DDPGAgent:
         assert self.critic_model_set, 'critic model not set!'
         minibatch = self.memory.sample(batch_size)
         idxs, states, actions, rewards, next_states = [], [], [], [], []
-        for idx, (state, action, reward, next_state, done) in minibatch:
+        for idx, (state, action, reward, next_state, _) in minibatch:
             idxs+=[idx]
             states+=[state]
             actions+=[action]
@@ -179,9 +175,8 @@ class DDPGAgent:
                     next_state = self.featurize_state(next_state)
                 self.remember(state, action, reward, next_state, done)
                 # learn when memory is full, every BATCH steps
-                if len(self.memory) == self.memory_size and (counter%self.batch_size==0 or done or counter==200):
-                    self.variance *= 0.99995
-#                     self.replay(self.batch_size)
+                if len(self.memory) == self.memory_size and (counter%self.batch_size==0 or done):
+                    self.variance *= 0.9995
                     [self.replay(self.batch_size) for _ in range(10)]
                 state = next_state
                 if done or counter==200:
