@@ -1,0 +1,2 @@
+model_checkpoint_path: "model3g_ppo.ckpt"
+all_model_checkpoint_paths: "model3g_ppo.ckpt"

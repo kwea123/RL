@@ -70,9 +70,7 @@ class PPOTest:
                 self.kl_mean = tf.reduce_mean(kl)
                 self.aloss = -(tf.reduce_mean(surr - self.tflam * kl))
             else:   # clipping method, find this is better
-                self.aloss = -tf.reduce_mean(tf.minimum(
-                    surr,
-                    tf.clip_by_value(ratio, 1.-METHOD['epsilon'], 1.+METHOD['epsilon'])*self.tfadv))
+                self.aloss = -tf.reduce_mean(tf.minimum(surr, tf.clip_by_value(ratio, 1.-METHOD['epsilon'], 1.+METHOD['epsilon'])*self.tfadv)) - 0.01 * pi.entropy()
 
         with tf.variable_scope('atrain'):
             self.atrain_op = tf.train.AdamOptimizer(self.actor_learning_rate).minimize(self.aloss)
@@ -82,7 +80,7 @@ class PPOTest:
     def _build_anet(self, name, trainable):
         with tf.variable_scope(name):
             l1 = tf.layers.dense(self.tfs, 100, tf.nn.relu, trainable=trainable)
-            l2 = tf.layers.dense(l1, 30, tf.nn.relu)
+            l2 = tf.layers.dense(l1, 30, tf.nn.relu, trainable=trainable)
             mu = max(np.abs(self.action_low), np.abs(self.action_high)) * tf.layers.dense(l2, self.action_size, tf.nn.tanh, trainable=trainable)
             sigma = tf.layers.dense(l2, self.action_size, tf.nn.softplus, trainable=trainable)
             norm_dist = tf.distributions.Normal(loc=mu, scale=sigma+1e-5)
