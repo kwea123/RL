@@ -6,7 +6,6 @@ from ai.agents.DDQNAgent import *
 from ai.agents.ActorCriticAgent import *
 from ai.agents.DDPGAgent import *
 from ai.agents.PPOAgent import *
-from ai.agents.PPOTest import *
 from ai.agents.SarsaLambdaAgent import *
 from ai.environments.gridworld import *
 from ai.environments.arm_env import *
@@ -54,9 +53,9 @@ def main():
 #     env = gym.make('CartPole-v0')
 #     env = gym.make('MountainCar-v0')
 #     env = gym.make('Pendulum-v0')
-#     env = gym.make("MountainCarContinuous-v0")
+    env = gym.make("MountainCarContinuous-v0")
     
-    env = ArmEnv(mode='hard')
+#     env = ArmEnv(mode='hard')
 #     env.seed(1)
     
     #discrete action space required
@@ -121,8 +120,6 @@ def main():
 #             priority_alpha=0
 #             )
 
-    print(env.reset())
-    
 #     agent = DDPGAgent(env,
 #             n_actions=env.action_dim,
 #             n_features=env.state_dim,
@@ -134,22 +131,22 @@ def main():
 #             priority_alpha=0
 #             )
 
-#     agent = PPOTest(env,
-#                     n_actions=1,
-#                     n_features=env.observation_space.shape[0],
-#                     featurize=True, 
-#                     action_high=env.action_space.high[0],
-#                     action_low=env.action_space.low[0],
-#                     actor_learning_rate=0.001,
-#                     critic_learning_rate=0.002
-#                     )
+    agent = PPOAgent(env,
+                    n_actions=1,
+                    n_features=env.observation_space.shape[0],
+                    featurize=False, 
+                    action_high=env.action_space.high[0],
+                    action_low=env.action_space.low[0],
+                    actor_learning_rate=0.001,
+                    critic_learning_rate=0.002
+                    )
     
 #     tf.summary.FileWriter("./logs", agent.sess.graph)
     
-#     rewards = agent.learn(100,visualize=True,verbose=1)
-#     plt.plot(rewards)
-#     plt.show()
-#     agent.test(10)
+    rewards = agent.learn(1000,visualize=False,verbose=1)
+    plt.plot(rewards)
+    plt.show()
+    agent.test(10)
 
 if __name__ == "__main__":
     main()

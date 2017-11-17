@@ -11,7 +11,7 @@ from sklearn.utils import shuffle
 class PPOAgent:
     def __init__(self, env:gym.Env, n_actions, n_features, action_low, action_high, featurize=False, reward_decay=0.95,
                  actor_learning_rate=0.01, critic_learning_rate=0.01, learning_rate_decay=0.95,
-                 tau=0.9):
+                 ):
         self.env = env
         self.state_size = n_features
         self.action_size = n_actions
@@ -23,10 +23,9 @@ class PPOAgent:
         self.actor_learning_rate = actor_learning_rate
         self.critic_learning_rate = critic_learning_rate # often larger than actor_learning_rate
         self.learning_rate_decay = learning_rate_decay
-        self.tau = tau # soft update
         self.batch_size = 64
         self.epsilon = 0.2 # used to clip
-        self.entfact = 5e-3 # entropy factor, to encourage exploration
+        self.entfact = 1e-3 # entropy factor, to encourage exploration
         self.lam = 0.95 # gae factor
         self.memory = [] # store (s, a, r) for one agent
         self.agents = 5 # number of agents that collect memory
@@ -47,8 +46,8 @@ class PPOAgent:
         # critic
         with tf.variable_scope('critic'):
             net = tf.layers.dense(self.tfs, 200, tf.nn.relu)
-            net = tf.layers.dense(net, 100, tf.nn.relu)
-            net = tf.layers.dense(net, 30, tf.nn.relu)
+#             net = tf.layers.dense(net, 100, tf.nn.relu)
+#             net = tf.layers.dense(net, 30, tf.nn.relu)
             self.v = tf.layers.dense(net, 1)
             self.tfdc_r = tf.placeholder(tf.float32, [None, 1], 'discounted_r')
             self.closs = tf.reduce_mean(tf.square(self.tfdc_r - self.v))
@@ -81,9 +80,9 @@ class PPOAgent:
         
     def _build_anet(self, name, trainable):
         with tf.variable_scope(name):
-            net = tf.layers.dense(self.tfs, 200, tf.nn.relu, trainable=trainable)
-            net = tf.layers.dense(net, 100, tf.nn.relu, trainable=trainable)
-            net = tf.layers.dense(net, 30, tf.nn.relu, trainable=trainable)
+            net = tf.layers.dense(self.tfs, 30, tf.nn.relu, trainable=trainable)
+#             net = tf.layers.dense(net, 100, tf.nn.relu, trainable=trainable)
+#             net = tf.layers.dense(net, 30, tf.nn.relu, trainable=trainable)
             mu = max(np.abs(self.action_low), np.abs(self.action_high)) * tf.layers.dense(net, self.action_size, tf.nn.tanh, trainable=trainable)
             sigma = tf.layers.dense(net, self.action_size, tf.nn.softplus, trainable=trainable)
             norm_dist = tf.distributions.Normal(loc=mu, scale=sigma)
