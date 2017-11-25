@@ -1,2 +1,2 @@
-model_checkpoint_path: "matching_pennies_self_play200k.ckpt"
-all_model_checkpoint_paths: "matching_pennies_self_play200k.ckpt"
+model_checkpoint_path: "matching_pennies_self_play100k.ckpt"
+all_model_checkpoint_paths: "matching_pennies_self_play100k.ckpt"
