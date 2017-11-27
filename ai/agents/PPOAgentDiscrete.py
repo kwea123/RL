@@ -62,7 +62,7 @@ class PPOAgentDiscrete:
         self.tfa_one_hot = tf.contrib.layers.one_hot_encoding(self.tfa, self.action_size)
         with tf.variable_scope('loss'):
             with tf.variable_scope('surrogate'):
-                self.ratio = tf.reduce_sum(self.pi_probs * self.tfa_one_hot) / (tf.reduce_sum(self.oldpi_probs * self.tfa_one_hot)+1e-10)
+                self.ratio = tf.reduce_sum(self.pi_probs * self.tfa_one_hot, axis=1) / (tf.reduce_sum(self.oldpi_probs * self.tfa_one_hot, axis=1)+1e-10)
                 surr = self.ratio * self.tfadv
                 surr2 = tf.clip_by_value(self.ratio, 1-self.epsilon, 1+self.epsilon) * self.tfadv
                 entropy = - tf.reduce_sum(self.pi_probs * tf.log(self.pi_probs + 1e-10))
