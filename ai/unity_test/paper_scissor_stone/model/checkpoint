@@ -1,2 +1,2 @@
-model_checkpoint_path: "pss_self_play100k.ckpt"
-all_model_checkpoint_paths: "pss_self_play100k.ckpt"
+model_checkpoint_path: "pss_self_play3000.ckpt"
+all_model_checkpoint_paths: "pss_self_play3000.ckpt"
