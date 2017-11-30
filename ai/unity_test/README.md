@@ -19,6 +19,20 @@ The agent controls a plane, on which an inverted broom stands. The agent tries t
   * Every step : 1 + 1/(|angle_z|+1) + 1/(|angle_x|+1), to minimize the angle of inclination
   * When |angle_z|>30 or |angle_x|>30, set the reward to -20 and *done*.
   
+# robot arm (3d)
+The agent controls a robot arm consisting of two joints, fixed at origin. Yellow cubes appears at a random position and disappears after a while. The agent tries to move the arm and grab the cube.
+
+* state size : 10
+  1.  A integer (0 or 1) indicating whether the arm has reached the cube (1 int number)
+  2.  The position of the cube and the upper arm (6 float numbers)
+  3.  The relative position between the hand and the cube (3 float numbers)
+* action size : 4, continuous
+  1.  Turn the joints (4 float numbers, 2 for each joint)
+* rewards and *done* :
+  * Every step : - distance between the hand and the cube, to encourage approach to the cube.
+  * When distance < 2, set reward to 50.
+  * *done* when the time exceeds 5000.
+  
 # autocar
 The agent controls a car on a (partial or full) track. The agent tries to move the car to the goal, or to complete the whole track without falling. The agent is equipped with a camera in front of the car to tell the information of the track.
 
