@@ -1,2 +1,2 @@
-model_checkpoint_path: "model_dodger2_20000.ckpt"
-all_model_checkpoint_paths: "model_dodger2_20000.ckpt"
+model_checkpoint_path: "model_chaser_img200.ckpt"
+all_model_checkpoint_paths: "model_chaser_img200.ckpt"
