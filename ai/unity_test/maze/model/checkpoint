@@ -1,2 +1,2 @@
-model_checkpoint_path: "maze10.ckpt"
-all_model_checkpoint_paths: "maze10.ckpt"
+model_checkpoint_path: "maze4.ckpt"
+all_model_checkpoint_paths: "maze4.ckpt"
