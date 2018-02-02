@@ -1,0 +1,2 @@
+model_checkpoint_path: "drone_forward10.ckpt"
+all_model_checkpoint_paths: "drone_forward10.ckpt"
