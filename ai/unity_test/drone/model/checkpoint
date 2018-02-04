@@ -1,2 +1,2 @@
-model_checkpoint_path: "drone_randomSequence1.ckpt"
-all_model_checkpoint_paths: "drone_randomSequence1.ckpt"
+model_checkpoint_path: "drone_randomSequence1_3d.ckpt"
+all_model_checkpoint_paths: "drone_randomSequence1_3d.ckpt"
