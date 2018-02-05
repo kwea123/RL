@@ -67,3 +67,22 @@ The agent controls a car on a (partial or full) track. The agent tries to move t
    
 Link to youtube video showing a possible strategy for the robot :
 [bipedal robot](https://youtu.be/iETQGdEFVxI)
+
+# drone
+Control a drone to fly on a specific path
+
+* state size : 15
+  1. The angles of the drone (3 float numbers)
+  2. The velocity of the drone (3 float numbers)
+  3. The relative position of the next 3 cubes (3x3=9 float numbers)
+* action size : 4, continuous
+  1. Forces on the three directions (3 float numbers)
+  2. Yaw (y-axis rotation) (1 float number)
+* rewards and *done* :
+   * Every step : -0.01 - (distance to the next cube/200) - (absolute difference between the y coordinate of the drone and the next cube)/100
+   * When the drone reaches the next cube, reward = +10
+   * When the distance to the next cube is > 4, reward = -10 and *done*
+   * When all the cubes are reached, *done*
+   
+Link to youtube video showing the drone completing a 50-cube path :
+[drone 50](https://youtu.be/ECAw-84YvPw)
