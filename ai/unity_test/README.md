@@ -47,8 +47,8 @@ The agent controls a car on a (partial or full) track. The agent tries to move t
   * When the car falls off the track, set reward to -50 and *done*.
   * When the car reaches the goal (if there is any), set reward to 100 and *done*.
   
- Link to youtube video showing fully learnt car movements :
- [autocar](https://youtu.be/pHsxddQF0Tc)
+Fully learnt car movements :
+[autocar](https://youtu.be/pHsxddQF0Tc)
  
  # animals
  For the moment, I only modelled a bipedal robot who has four joints, two on each foot. The agent tries to move forward without falling.
@@ -65,7 +65,7 @@ The agent controls a car on a (partial or full) track. The agent tries to move t
    * Every step : The amount of forward movement * 10 - the angle of the body / 100, to encourage forward movement and to avoid unstable body.
    * When the body is too low, consider it gets stuck, set reward to -10 and *done*. This also avoids the rolling behaviour observed in training.
    
-Link to youtube video showing a possible strategy for the robot :
+A possible strategy for the robot :
 [bipedal robot](https://youtu.be/iETQGdEFVxI)
 
 # drone
@@ -84,14 +84,14 @@ Control a drone to fly on a specific path
    * When the distance to the next cube is > 4, reward = -10 and *done*
    * When all the cubes are reached, *done*
    
-Link to youtube video showing the drone completing a 50-cube path :
+Drone completing a 50-cube path :
 [drone 50](https://youtu.be/ECAw-84YvPw)
 
-Link to youtube video showing the drone completing a size 4 3d maze :
+Drone completing a size 4 3d maze :
 [drone maze4](https://youtu.be/edM7mxeRYlY)
 
-Link to youtube video showing the drone completing a size 10 3d maze :
+Drone completing a size 10 3d maze :
 [drone maze10](https://youtu.be/e32YkK7myuE)
 
-Link to youtube video showing the drone completing a size 10 3d maze (smoother movement):
+Drone completing a size 10 3d maze (smoother movement):
 [drone maze10 sm](https://youtu.be/62P0yJCHeTI)
