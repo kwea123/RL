@@ -89,3 +89,6 @@ Link to youtube video showing the drone completing a 50-cube path :
 
 Link to youtube video showing the drone completing a size 4 3d maze :
 [drone maze4](https://youtu.be/edM7mxeRYlY)
+
+Link to youtube video showing the drone completing a size 10 3d maze :
+[drone maze10](https://youtu.be/e32YkK7myuE)
