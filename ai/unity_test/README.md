@@ -92,3 +92,6 @@ Link to youtube video showing the drone completing a size 4 3d maze :
 
 Link to youtube video showing the drone completing a size 10 3d maze :
 [drone maze10](https://youtu.be/e32YkK7myuE)
+
+Link to youtube video showing the drone completing a size 10 3d maze (smoother movement):
+[drone maze10 sm](https://youtu.be/62P0yJCHeTI)
