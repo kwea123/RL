@@ -86,3 +86,6 @@ Control a drone to fly on a specific path
    
 Link to youtube video showing the drone completing a 50-cube path :
 [drone 50](https://youtu.be/ECAw-84YvPw)
+
+Link to youtube video showing the drone completing a size 4 3d maze :
+[drone maze4](https://youtu.be/edM7mxeRYlY)
