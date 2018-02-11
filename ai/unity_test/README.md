@@ -73,7 +73,7 @@ Control the ball to roll on a specific path.
 * state size : 9
   1. Whether the ball touches the wall (1 or 0) (1 float number)
   2. The velocity of the ball (2 float numbers)
-  3. The relative position of the next 3 planes (3x2=6 float numbers)
+  3. The relative position to the next 3 planes (3x2=6 float numbers)
 * action size : 2, continuous
   1. Forces in the two directions
 * rewards and *done* :
@@ -91,7 +91,7 @@ Control a drone to fly on a specific path.
 * state size : 15
   1. The angles of the drone (3 float numbers)
   2. The velocity of the drone (3 float numbers)
-  3. The relative position of the next 3 cubes (3x3=9 float numbers)
+  3. The relative position to the next 3 cubes (3x3=9 float numbers)
 * action size : 4, continuous
   1. Forces in the three directions (3 float numbers)
   2. Yaw (y-axis rotation) (1 float number)
