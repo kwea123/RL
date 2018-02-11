@@ -5,7 +5,7 @@ This directory contains four independent environments to train a drone, using ht
 List of assets used (all free):
 -------------------
 * [Drone](https://github.com/udacity/RoboND-QuadRotor-Unity-Simulator) (model is extracted from the scene)
-![alt text](descriptionImgs/drone.png)
+<img src="descriptionImgs/drone.png" width="400">
 
 # Environments
 
@@ -43,7 +43,7 @@ A straight line of 10 cubes to experiment the environment.
    
 randomSequence1
 ------------------
-![alt text](descriptionImgs/rand1.png)
+<img src="descriptionImgs/rand1.png" height="400">
 
 A cube randomly appears in one of the four spots (left/right/front/back) adjacent to the drone of distance 0.5.
 Same setup as the previous environment.
@@ -57,7 +57,7 @@ Same setup as the previous environment.
 
 randomSequence10_3d
 ------------------
-![alt text](descriptionImgs/rand10.png)
+<img src="descriptionImgs/rand10.png" width="600">
 
 **Ten** cubes are generated sequentially and randomly, each cube is adjacent to the precedent one of distance 0.5.
 Same setup as the previous environment.
@@ -85,6 +85,7 @@ Drone completing a size 4 3d maze :
 maze10_3d
 ------------------
 ![alt text](descriptionImgs/maze10.png)
+
 Inner view of the maze and the path : 
 ![alt text](descriptionImgs/maze_in.png)
 A 3d maze of size **10** is generated.
