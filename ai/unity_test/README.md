@@ -68,8 +68,25 @@ Fully learnt car movements :
 A possible strategy for the robot :
 [bipedal robot](https://youtu.be/iETQGdEFVxI)
 
+# maze
+Control the ball to roll on a specific path.
+* state size : 9
+  1. Whether the ball touches the wall (1 or 0) (1 float number)
+  2. The velocity of the ball (2 float numbers)
+  3. The relative position of the next 3 planes (3x2=6 float numbers)
+* action size : 2, continuous
+  1. Forces on the two directions
+* rewards and *done* :
+  * Every step : -0.01 - (distance to the next plane/200)
+  * When the ball rolls outside the path (colored planes), reward = -10 and *done*
+  * If the ball touches the wall, reward = -0.05
+  * When all the planes are reached, *done*
+  
+Ball completing a size 20 maze :
+[maze20](https://youtu.be/h8vSp_UK6hQ)
+
 # drone
-Control a drone to fly on a specific path
+Control a drone to fly on a specific path.
 
 * state size : 15
   1. The angles of the drone (3 float numbers)
@@ -80,6 +97,7 @@ Control a drone to fly on a specific path
   2. Yaw (y-axis rotation) (1 float number)
 * rewards and *done* :
    * Every step : -0.01 - (distance to the next cube/200) - (absolute difference between the y coordinate of the drone and the next cube)/100
+   * If the drone touches the wall, reward = -0.1
    * When the drone reaches the next cube, reward = +10
    * When the distance to the next cube is > 4, reward = -10 and *done*
    * When all the cubes are reached, *done*
