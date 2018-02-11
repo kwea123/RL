@@ -75,7 +75,7 @@ Control the ball to roll on a specific path.
   2. The velocity of the ball (2 float numbers)
   3. The relative position of the next 3 planes (3x2=6 float numbers)
 * action size : 2, continuous
-  1. Forces on the two directions
+  1. Forces in the two directions
 * rewards and *done* :
   * Every step : -0.01 - (distance to the next plane/200)
   * When the ball rolls outside the path (colored planes), reward = -10 and *done*
@@ -93,7 +93,7 @@ Control a drone to fly on a specific path.
   2. The velocity of the drone (3 float numbers)
   3. The relative position of the next 3 cubes (3x3=9 float numbers)
 * action size : 4, continuous
-  1. Forces on the three directions (3 float numbers)
+  1. Forces in the three directions (3 float numbers)
   2. Yaw (y-axis rotation) (1 float number)
 * rewards and *done* :
    * Every step : -0.01 - (distance to the next cube/200) - (absolute difference between the y coordinate of the drone and the next cube)/100
