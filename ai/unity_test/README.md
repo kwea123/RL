@@ -85,6 +85,9 @@ Control the ball to roll on a specific path.
 Ball completing a size 20 maze :
 [maze20](https://youtu.be/h8vSp_UK6hQ)
 
+Using a rnn of seqlen = 3 (running faster?):
+[maze20 rnn](https://youtu.be/8em5apl6GGs)
+
 # drone
 Control a drone to fly on a specific path.
 
