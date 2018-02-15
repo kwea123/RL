@@ -68,19 +68,22 @@ if __name__ == "__main__":
 
     rank = np.arange(1, npop + 1)
     util_ = np.maximum(0, np.log(npop / 2 + 1) - np.log(rank))
-    utility = util_ / util_.sum() - 1 / npop
+    utility = util_ / util_.sum() - 1 / npop # it doesn't converge using utility this time...
 
     pool = mp.Pool()
 
+    #train
     for e in range(400):
         jobs = [pool.apply_async(job, (es,)) for i in range(npop)] # each es in the job is a COPY
         results = np.array([j.get() for j in jobs])
         noises = results[:,0]
         rewards = results[:,1]
         print('\rbest reward for ep', e+1, ':', np.max(rewards), end=' '*10)
-        ranks = np.argsort(rewards)[::-1]
-        noises = np.vstack(noises)[ranks]
-        rewards = rewards[ranks].astype(np.float32)
+        #ranks = np.argsort(rewards)[::-1]
+        #noises = np.vstack(noises)[ranks]
+        #rewards = rewards[ranks].astype(np.float32)
+        noises = np.vstack(noises)
+        rewards = rewards.astype(np.float32)
         rewards = (rewards - np.mean(rewards))/np.std(rewards)
         es.update(alpha/(npop*sigma), noises, rewards)
 
@@ -89,7 +92,7 @@ if __name__ == "__main__":
     es.reset_net() # so we need to update the true ES in the main process
     
     #test
-    for e in range(10):
+    for e in range(5):
         state = env.reset()
         r = 0
         while True:
