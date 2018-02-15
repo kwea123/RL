@@ -73,7 +73,7 @@ if __name__ == "__main__":
     pool = mp.Pool()
 
     #train
-    for e in range(400):
+    for e in range(500):
         jobs = [pool.apply_async(job, (es,)) for i in range(npop)] # each es in the job is a COPY
         results = np.array([j.get() for j in jobs])
         noises = results[:,0]
@@ -107,6 +107,3 @@ if __name__ == "__main__":
 
     print('finished testing!')
     env.close()
-    
-    
-    
