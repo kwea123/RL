@@ -12,12 +12,12 @@ user32 = windll.user32
 user32.SetProcessDPIAware()
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP
-host = '36.231.24.167'#'36.231.62.198'
+host = '127.0.0.1'
 port = 5555
 sock.connect((host, port))
 sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
-mon = {'top': 0, 'left': 0, 'width': 800, 'height': 450}
+mon = {'top': 0, 'left': 0, 'width': 800, 'height': 2000}
 sct = mss.mss()
 
 screenshots = [] # don't need to sync
@@ -45,7 +45,7 @@ while True:
             print("conversion time elapsed : "+str(time.clock() - start))
             start = time.clock()
             compress = zlib.compressobj(zlib.Z_DEFAULT_COMPRESSION, zlib.DEFLATED, 15)
-            compressed_data = compress.compress(imgByteArr)
+            compressed_data = compress.compress(imgByteArr)  
             compressed_data += compress.flush()
             packed_size = struct.pack("i", len(compressed_data))
             sock.sendall(packed_size+compressed_data)
