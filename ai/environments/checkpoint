@@ -1,0 +1,3 @@
+model_checkpoint_path: "30bits.ckpt"
+all_model_checkpoint_paths: "30bits"
+all_model_checkpoint_paths: "30bits.ckpt"

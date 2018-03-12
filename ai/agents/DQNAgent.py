@@ -17,7 +17,7 @@ class DQNAgent:
         self.memory = Memory(capacity=memory_size, a=priority_alpha)
         self.priority_alpha = priority_alpha
         self.gamma = reward_decay   # discount rate
-        self.epsilon = 1.0   # exploration rate
+        self.epsilon = 0.2   # exploration rate
         self.epsilon_min = 0.001 # min epsilon
         self.epsilon_decay = 0.995
         self.learning_rate = learning_rate
@@ -69,10 +69,10 @@ class DQNAgent:
             if self.priority_alpha > 0: # prioritised, update
                 self.memory.update(idx, self.error(state, action, reward, next_state, done))
         self.model.fit(np.vstack(states), np.vstack(target_fs), epochs=1, verbose=0)
-        self.epsilon *= self.epsilon_decay
-        if self.epsilon < self.epsilon_min:
-            self.epsilon = self.epsilon_min
-        self.learning_rate *= self.learning_rate_decay
+#         self.epsilon *= self.epsilon_decay
+#         if self.epsilon < self.epsilon_min:
+#             self.epsilon = self.epsilon_min
+#         self.learning_rate *= self.learning_rate_decay
             
     def learn(self, n_episodes, visualize=False, verbose=0):
         assert self.model_set, 'model not set!'
