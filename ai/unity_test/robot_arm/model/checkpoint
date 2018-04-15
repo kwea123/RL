@@ -1,2 +1,2 @@
-model_checkpoint_path: "model3d_range6_ddpg.ckpt"
-all_model_checkpoint_paths: "model3d_range6_ddpg.ckpt"
+model_checkpoint_path: "model3d_range5_ddpg_sparse.ckpt"
+all_model_checkpoint_paths: "model3d_range5_ddpg_sparse.ckpt"
